@@ -1,0 +1,62 @@
+{{#section 'head'}}
+
+
+
+<style>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+</style>
+
+{{/section}}
+
+
+<body style="height: 100%">
+  <div id="editor">
+
+  </div>
+</body>
+<script src='../static/js/templateEditor.js'></script>
+<script>
+  // @ts-check 
+  templateId = {{ templateId }};
+
+  jsReportEasyStudioEditor.language='sk-SK';
+  jsReportEasyStudioEditor.onLoad =  function(){
+    jQuery.get('/getTemplate/' + templateId, null, function (dataJson) {
+      if (typeof dataJson =='string'){
+        dataJson = JSON.parse(dataJson);
+      }
+      jsReportEasyStudioEditor.loadData(dataJson);
+    });
+    jQuery.get('/getTemplateDataParams/' + templateId, null, function (dataJson) {
+      if (typeof dataJson =='string'){
+        dataJson = JSON.parse(dataJson);
+      }
+      jsReportEasyStudioEditor.addSnippets(dataJson);
+    });
+  };
+  jsReportEasyStudioEditor.createEditor('editor');
+  jsReportEasyStudioEditor.saveAsync =false; 
+  jsReportEasyStudioEditor.saveMethod = function (data) {
+
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > 10000) {
+        break;
+      }
+    }
+
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      url: '/setTemplate/' + templateId
+    });
+    return true;
+  };
+
+</script>

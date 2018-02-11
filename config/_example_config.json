@@ -1,0 +1,20 @@
+{
+    "templateStore":{
+        "type":"api",
+        "url":"localhost/getTemplate/:id",
+        "idPlaceHolder":":id",
+        "clientOptions":null
+    },
+
+    "dataProviderStores":[
+        {
+            "id":"main",
+            "type":"api",
+            "url":"localhost/getData/:sourceId?:parameters",
+            "sourceIdPlaceHolder":":sourceId",
+            "parametersPlaceholder":":parameters",
+            
+        }
+
+    ]
+}

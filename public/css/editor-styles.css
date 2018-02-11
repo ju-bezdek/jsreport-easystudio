@@ -1,0 +1,211 @@
+
+
+#code-container, #code {
+  height: calc(100% - 46px);
+}
+#editor-container {
+  height: calc(100% - 46px);
+}
+#jsReportEasyStudioEditor-MainMenu ul {
+  font-size: 85%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  list-style-type: none;
+  padding-left: 5px;
+  margin: 0px;
+  overflow: hidden;
+  background-color: rgb(87, 87, 87);
+}
+#jsRepor#tTemplateEditor-SubMenu{
+  
+  background-color:  rgb(66, 66, 66);
+}
+#jsReportEasyStudioEditor-MainMenu ul.mainMenu {
+  padding: 5px ;
+}
+
+#jsReportEasyStudioEditor-SubMenu li.active{
+    border-width: 5px;
+    border-bottom-style: solid;
+    border-color: rgb(193, 193, 193);
+}
+
+#jsReportEasyStudioEditor-SubMenu ul.jsReportEasyStudioEditor-list {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 80%;
+
+  list-style-type: none;
+
+  padding-left: 5px;
+  margin: 0px;
+
+  
+  overflow: hidden;
+
+}
+
+#jsReportEasyStudioEditor-SubMenu ul li, a {
+  float: left;
+  padding: 5px ;
+
+  color: rgb(46, 46, 46);
+  text-decoration: none;
+}
+
+#jsReportEasyStudioEditor-MainMenu.nav ul li {
+  float: left;
+}
+
+#jsReporTemplatetEditor .hidden {
+  display: none
+}
+
+#jsReportEasyStudioEditor-MainMenu .saveError{
+  
+  animation: bgColorErr 10s ease-in-out;
+}
+@keyframes bgColorErr {
+  0.0% {
+    background-color: rgb(54, 15, 15);
+  }
+  10.0% {
+    background-color: rgb(191, 62, 62);
+  }
+  100% {
+    background-color: rgb(54, 15, 15);
+  }
+}
+
+
+
+#jsReporTemplatetEditor .visible {
+  display: block
+}
+
+#jsReportEasyStudioEditor-MainMenu.nav ul li.actionButton {
+  margin-right: 5px
+}
+
+#jsReportEasyStudioEditor-MainMenu.nav ul li.actionButton a:hover
+{
+  background-color: rgb(36, 132, 187);
+}
+#jsReportEasyStudioEditor-SubMenu ul li:hover {
+  
+  border-width: 5px;
+  border-bottom-style: solid;
+  border-color: rgb(36, 132, 187);
+}
+
+#jsReportEasyStudioEditor-MainMenu.nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding:  10px 10px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+
+#jsReporTemplatetEditor nav ul li a:hover {
+  background-color: rgb(151, 129, 129);
+}
+
+#jsReportEasyStudioEditor .visible{ display: block;}
+
+#jsReportEasyStudioEditor .hidden {display: none;}
+
+#jsReportEasyStudioEditor .overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: visible;
+  opacity: 1;
+}
+#jsReportEasyStudioEditor .close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#jsReportEasyStudioEditor .iframe-div 
+{    
+  width: 80%;
+  height: 80%;
+  background-color: #ffffff;
+  padding-top: 20px;
+  position: fixed;
+  padding: 5px;
+  top: 10%;
+  left: 50%;
+  margin-left: -40%;
+}
+#jsReportEasyStudioEditor .iframe-div iframe
+{
+    width:100%;
+     height:calc(100% - 35px)
+}
+#jsReportEasyStudioEditor .loader,
+#jsReportEasyStudioEditor .loader:before,
+#jsReportEasyStudioEditor .loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+#jsReportEasyStudioEditor .loader {
+  color: #ffffff;
+  font-size: 10px;
+  margin: 80px auto;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+#jsReportEasyStudioEditor .loader:before,
+#jsReportEasyStudioEditor .loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+#jsReportEasyStudioEditor .loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+#jsReportEasyStudioEditor .loader:after {
+  left: 3.5em;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+
+
