@@ -1,13 +1,24 @@
 //This is just config.js example for demo and testing purpose 
 
 global.demoTemplate=JSON.stringify([
-    {"key": "body", "value":"<h1>hello body</h1>", "caption":"Main body of document"},
-    {"key": "header", "value":"<h1>hello header</h1>", "caption":"Header"}, //optional
-    {"key": "footer", "value":"<h1>hello footer</h1>", "caption":"Footer"}, //optional
-    {"key": "options", "type":"JSON", "value": JSON.stringify({ 'output':'pdf', 'margin':'null' , 'format':'A4', dataSourceId:"demo", dataStore:"demo" }), "caption":"Configuration"} //optional but recomended
+    {"key": "body", "value":"<h1>hello body</h1>"},
+    {"key": "header", "value":"<h1>hello header</h1>"}, //optional
+    {"key": "footer", "value":"<h1>hello footer</h1>"}, //optional
+    {"key": "options", "type":"JSON", "value": JSON.stringify({ 'output':'pdf', 'margin':'null' , 'format':'A4', dataSourceId:"demo", dataStore:"demo" })} //optional but recomended
 ]);
 
 exports.config = {
+    "localization":{
+        "de": {
+            code: "Code",
+            editor: "Editor",
+            insertData: "Datenfeld einfügen",
+            save: "Sparen",
+            cantInsertHere: "Dieses element kann nicht eingefügt hier werden",
+            preview: "Vorschau"
+        }
+    },
+    "language":"sk",
     "templateStore":{
         "type":"func",
         /**
@@ -47,7 +58,13 @@ exports.config = {
             "id":"demo",
             "type":"func",
             getData: function (sourceId,parameters){
-                return {"this_is":"cool new object filled with data", "and":{"data":"objects","plus":[{"arrays": "of objects and"}, {"arrays": "of its items"}]}}; 
+                var res =  {"this_is":"cool new object filled with data", "and":{"data":"objects","plus":[{"arrays": "of objects and"}, {"arrays": "of its items"}]}};
+                var keys  = Object.getOwnPropertyNames(parameters);
+                for (let index = 0; index < keys.length; index++) {
+                    const key = keys[index];
+                    res[key]=parameters[key]
+                }
+                return res;
             },
             //This is optional... getData without parameters is called by default
             getDemoData: function(sourceId){

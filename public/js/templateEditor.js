@@ -39,15 +39,23 @@
                 insertData: "Insert datafield",
                 save: "Save",
                 cantInsertHere: "Can't insert this element here",
-                preview: "Preview"
+                preview: "Preview",
+                body:"Body",
+                header:"Header",
+                footer:"Footer",
+                options:"Configuration"
             },
-            "sk-SK": {
+            "sk": {
                 code: "Zdrojový kód",
                 editor: "Editor",
                 insertData: "Vložiť dátové pole",
                 save: "Uložiť",
                 cantInsertHere: "Sem nie je možné vložiť tento prvok",
-                preview: "Ukážka"
+                preview: "Ukážka",
+                body:"Hlavná šablóna",
+                header:"Hlavička",
+                footer:"Pätička",
+                options:"Nastavenia"
             }
         },
 
@@ -445,7 +453,8 @@
                 var anchor = document.createElement('a');
                 anchor.href = "#";
                 ele.appendChild(anchor);
-                anchor.appendChild(document.createTextNode(item.caption || item.key));
+                var localizeCaption = jsReportEasyStudioEditor.localizedTexts[jsReportEasyStudioEditor.language][item.key]
+                anchor.appendChild(document.createTextNode(item.caption || localizeCaption|| item.key));
                 ul.appendChild(ele);
 
                 ele.addEventListener("click", handleClick, passiveSupported ? {

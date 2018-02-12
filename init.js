@@ -1,5 +1,8 @@
 var init = function(appModule,config){
 
+    appModule.language =  config.language || "en-US";
+    appModule.localization= config.localization;
+
     if (!config.templateStore.type){
         config.templateStore.type ="api ";
     }

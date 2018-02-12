@@ -90,13 +90,18 @@ app.get('/', function (req, res) {
 });
 
 // TODO: toto treba doriešiť... typicky je parametrom idčko šablony a data formou post/get
-app.get('/render-report', function (req, res) {
+app.get('/render-report/:templateId', function (req, res) {
+    var templateId=req.params.templateId;
     var parameters = req.query;
-    var options= jsReportApp.getTemplateOptions(templateId);
+    var templateData = jsReportApp.getTemplate(templateId);
+    if (typeof templateData === "string") {
+        templateData = JSON.parse(templateData);
+    }
+    var options= jsReportApp.parseOptions(templateData);
     if (options && options.dataSourceId)
     {
-        var demoData = jsReportApp.dataProviderStores[options.dataStore||'default'].getData(options.dataSourceId, parameters);
-        jsReportApp.rendering.renderTemplate(res, req.body, demoData);
+        var data = jsReportApp.dataProviderStores[options.dataStore||'default'].getData(options.dataSourceId, parameters);
+        jsReportApp.rendering.renderTemplate(res, templateData, data);
     }
 });
 
@@ -150,7 +155,7 @@ app.post('/setTemplate/:id', function(req,res){
 app.get('/edit/:id', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
-    res.render('editTemplate', { layout: 'main', requestUrl: '/edit', templateId:req.params.id})
+    res.render('editTemplate', { layout: 'main', requestUrl: '/edit', templateId:req.params.id, language: jsReportApp.language, localization: JSON.stringify(jsReportApp.localization)})
 });
 
 app.listen(8080, () => console.log('app running'))

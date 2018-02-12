@@ -10,6 +10,7 @@
     height: 100%;
   }
 </style>
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
 {{/section}}
 
@@ -23,8 +24,11 @@
 <script>
   // @ts-check 
   templateId = {{ templateId }};
-
-  jsReportEasyStudioEditor.language='sk-SK';
+  var customLocalization = JSON.parse('{{{localization}}}');
+  if (customLocalization){
+      Object.assign( jsReportEasyStudioEditor.localizedTexts, customLocalization);
+  }
+  jsReportEasyStudioEditor.language='{{ language }}';
   jsReportEasyStudioEditor.onLoad =  function(){
     jQuery.get('/getTemplate/' + templateId, null, function (dataJson) {
       if (typeof dataJson =='string'){
