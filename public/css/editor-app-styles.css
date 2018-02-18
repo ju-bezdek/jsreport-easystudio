@@ -1,0 +1,28 @@
+#header {
+    background-color: rgb(87, 87, 87);
+    padding: 5px;
+}
+#header input {
+    background-color: rgb(99, 99, 99);
+    color: white;
+    padding: 5px;
+    border: none;
+    width: 200px;
+    font-size: 1em;
+}
+#header input:hover {
+    background-color: rgb(117, 117, 117);
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(175, 175, 175);
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(175, 175, 175);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(175, 175, 175);
+}

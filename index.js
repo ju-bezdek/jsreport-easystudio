@@ -19,14 +19,16 @@ try {
 }
 
 
-const initiaization = require('./init.js');
+
 
 const jsReportApp= (function(){
-    
-    var appModule = initiaization.create( config);
+    const initiaization = require('./init.js');
+    const localization = require('./config/localization.json');
+
+    var appModule = initiaization.create( config, localization);
     appModule.rendering = require('./rendering').init(); 
     appModule.parseOptions = function(data){
-        var val = data.find(x => x.key === 'options').value;
+        var val = data.templateParts.find(x => x.key === 'options').value;
         if (typeof val ==="string"){
             return JSON.parse(val);
         }
@@ -47,6 +49,7 @@ const jsReportApp= (function(){
     
     return appModule;
 })();
+
 
 
 const handlebars = exphbs.create({
@@ -121,15 +124,31 @@ app.post('/preview', function (req, res) {
 
 app.get('/getTemplate/:id', function(req,res){
     //  console.log('req:getTemplate');
-        res.contentType('json');
+        res.contentType('application/json');
         var data = jsReportApp.getTemplate(req.params.id);
+        res.send(data);
+}
+);
+
+app.get('/getNewTemplate', function(req,res){
+    //  console.log('req:getTemplate');
+        res.contentType('application/json');
+        var data = jsReportApp.getNewTemplate();
+        res.send(data);
+}
+);
+
+app.get('/getAllTemplates', function(req,res){
+    //  console.log('req:getTemplate');
+        res.contentType('application/json');
+        var data = jsReportApp.getAllTemplates();
         res.send(data);
 }
 );
 
 app.get('/getTemplateDataParams/:id', function(req,res){
     //console.log('req:getTemplateParams');
-    res.contentType('json');
+    res.contentType('application/json');
     var templateId;
 
     var options= jsReportApp.getTemplateOptions(templateId);
@@ -142,20 +161,60 @@ app.get('/getTemplateDataParams/:id', function(req,res){
 );
 
 
-
+/**
+ * save template
+ */
 app.post('/setTemplate/:id', function(req,res){
     console.log('req:setTemplate');
-    jsReportApp.setTemplate(req.params.id,req.body );
-    res.contentType('text');
-    res.send('OK');
+    var result = jsReportApp.setTemplate(req.params.id,req.body );
+    res.contentType('application/json');
+    res.send(result);
 }
 );
+
+app.post('/new', function (req, res) {
+    var result = jsReportApp.setTemplate(null,req.body );
+    res.contentType('application/json');
+    res.send(result);
+});
 
 
 app.get('/edit/:id', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
-    res.render('editTemplate', { layout: 'main', requestUrl: '/edit', templateId:req.params.id, language: jsReportApp.language, localization: JSON.stringify(jsReportApp.localization)})
+    res.render('editTemplate', {
+                                 layout: 'main', 
+                                 requestUrl: '/edit', 
+                                 easyAppState: JSON.stringify({templateId:req.params.id, language: jsReportApp.language, localization: jsReportApp.localization}) 
+                                }               
+    )
+});
+
+app.get('/new', function (req, res) {
+    console.log('req:edit');
+    res.contentType('html');
+    res.render('editTemplate', {
+        layout: 'main', 
+        requestUrl: '/edit', 
+        easyAppState: JSON.stringify({templateId:req.params.id, language: jsReportApp.language, localization: jsReportApp.localization}) 
+       }               
+    )
+});
+
+
+
+
+app.get('/list', function (req, res) {
+    console.log('req:edit');
+    res.contentType('html');
+    const header={
+        id:jsReportApp.localization['id']||'Id',
+        name:jsReportApp.localization['name']||'Name',
+        //comment:jsReportApp.localization['comment']||'Comment',
+        //lastModiftime:jsReportApp.localization['lastModiftime']||'Last modified',
+        //age:jsReportApp.localization['age']||'Age',
+    }
+    res.render('list', { layout: 'main', requestUrl: '/list', templates:jsReportApp.getAllTemplates(), header:header})
 });
 
 app.listen(8080, () => console.log('app running'))

@@ -1,44 +1,72 @@
 //This is just config.js example for demo and testing purpose 
-
-global.demoTemplate=JSON.stringify([
+global.memoryData={};
+global.demoTemplate=JSON.stringify({id:null, 
+    name:"",
+    lastModiftime:null,
+    comment:"",
+    templateParts:[
     {"key": "body", "value":"<h1>hello body</h1>"},
     {"key": "header", "value":"<h1>hello header</h1>"}, //optional
     {"key": "footer", "value":"<h1>hello footer</h1>"}, //optional
     {"key": "options", "type":"JSON", "value": JSON.stringify({ 'output':'pdf', 'margin':'null' , 'format':'A4', dataSourceId:"demo", dataStore:"demo" })} //optional but recomended
-]);
+]});
 
 exports.config = {
-    "localization":{
-        "de": {
-            code: "Code",
-            editor: "Editor",
-            insertData: "Datenfeld einfügen",
-            save: "Sparen",
-            cantInsertHere: "Dieses element kann nicht eingefügt hier werden",
-            preview: "Vorschau"
-        }
-    },
+    //Do not set this, unles you want add or override certain language
+    "localization":null,
     "language":"sk",
     "templateStore":{
         "type":"func",
+
+
         /**
+         * returns array like [{"id":1, "name":"First template"}]
+         */
+        getAllTemplates:function(){
+            var res =[];
+            if (global.memoryData){
+                var keys  = Object.getOwnPropertyNames(global.memoryData);
+
+                for (let index = 0; index < keys.length; index++) {
+                    let key = keys[index];
+                    res.push(global.memoryData[key]);
+                }
+            }
+            return res;
+        },
+         /**
          * Function returns array of objects like [
-            {"key": "body", "value":"<h1>hello body</h1>", "caption":"Main body of document"},
-            {"key": "header", "value":"<h1>hello header</h1>", "caption":"Header"},
-            {"key": "footer", "value":"<h1>hello footer</h1>", "caption":"Footer"},
-            {"key": "options", "type":"JSON", "value":"{ output:'pdf', margin:'', format:'A4'}", "caption":"Configuration"}
+            {"key": "body", "value":"<h1>hello body</h1>", "caption":"optional caption... for stadard keys use rather localization"},
+            {"key": "header", "value":"<h1>hello header</h1>" },
+            {"key": "footer", "value":"<h1>hello footer</h1>"},
+            {"key": "options", "type":"JSON", "value":"{ output:'pdf', margin:'', format:'A4'}"}
+            @param {Number} id 
         ]
          */
         getTemplate:function(id){
             return (global.memoryData||{})[id] || global.demoTemplate;
         },
+        getNewTemplate:function(){
+            return global.demoTemplate;
+        },
         setTemplate:function(id, data){
             //Write great things here
-            if (!global.memoryData){
-                global.memoryData={};
+
+
+            if (!data){
+                delete global.memoryData[id];
             }
-            global.memoryData[id] = data 
-            return true;
+            else{
+                if (!id){
+                    id = Object.keys(global.memoryData).length
+                    data.id=id;
+                }
+                if (!global.memoryData){
+                    global.memoryData={};
+                }
+                global.memoryData[id] = data 
+                return data;
+            }
         }
     },
 
@@ -68,7 +96,7 @@ exports.config = {
             },
             //This is optional... getData without parameters is called by default
             getDemoData: function(sourceId){
-                return {"this_is":"cool new object filled with data", "and":{"data":"objects","plus":[{"arrays": "of objects and"}, {"arrays": "of its items"}]}}; 
+                return {"peram1":"cool new object filled with data", "para2":{"data":"objects","plus":[{"pole": "of objects and"}, {"arrays": "of its items"}]}}; 
             }
         },
         {

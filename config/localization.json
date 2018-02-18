@@ -1,0 +1,28 @@
+{
+    "de": {
+        "code": "Code",
+        "editor": "Editor",
+        "insertData": "Datenfeld einfügen",
+        "save": "Sparen",
+        "cantInsertHere": "Dieses element kann nicht eingefügt hier werden",
+        "preview": "Vorschau",
+        "body":"Schablone",
+        "header":"Kopfzeile",
+        "footer":"Fußzeile",
+        "options":"Einstellungen",
+        "newNamePlaceholder":"Neue schablone"
+    },
+    "sk": {
+        "code": "Zdrojový kód",
+        "editor": "Editor",
+        "insertData": "Vložiť dátové pole",
+        "save": "Uložiť",
+        "cantInsertHere": "Sem nie je možné vložiť tento prvok",
+        "preview": "Ukážka",
+        "body":"Hlavná šablóna",
+        "header":"Hlavička",
+        "footer":"Pätička",
+        "options":"Nastavenia",
+        "newNamePlaceholder":"Nová šablóna"
+    }
+}

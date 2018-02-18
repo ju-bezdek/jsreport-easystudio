@@ -262,7 +262,7 @@
         },
 
         /**
-         * Saves file
+         * invokes saveAs for data
          * @param {byteArray} data 
          * @param {string} name fileName
          */
@@ -468,27 +468,32 @@
          * @data: data in format [ { key: id, value:"some html", caption:"optional user friednly name of section"}, ... ] 
          */
         loadData: function (data) {
-            for (var k in data) {
-                if (!data[k].value) {
+            var templateData = data.templateParts;
+            for (var k in templateData) {
+                if (!templateData[k].value) {
                     throw "invalid data... no value in data at: " + k;
                 }
             }
-            if (!data || !data[0].key || !data[0].value) {
+            if (!templateData || !templateData[0].key || !templateData[0].value) {
                 throw "";
             }
-            this.templateEditorData = data;
+            this.templateEditorData = templateData;
+            this.template =data;
 
 
             this.renderTemplateDataParts(this.constants.subMenuDivId);
-            this.setTemplate(data[0].key);
+            this.setTemplate(templateData[0].key);
 
         },
 
         save: function (data) {
+            if(data){
+                this.template.templateParts=data;
+            }
             jsReportEasyStudioEditor.wait(true);
             try {
                 setTimeout( function(){
-                    jsReportEasyStudioEditor.saveMethod(data|| this.templateEditorData);
+                    jsReportEasyStudioEditor.saveMethod( jsReportEasyStudioEditor.template);
                     jsReportEasyStudioEditor.wait(false);
                 }, 0 );
 
@@ -499,7 +504,9 @@
             }
         },
 
-
+        saveMethod : function () {
+          throw "you should set save method before running save()"
+          },
       
 
         /** 
@@ -544,11 +551,11 @@
             addRef('../node_modules/tinymce/tinymce.min.js');
             
             addRef('../static/js/editor.toolbar.js');
-            addRef('../static/js/promise.min.js');
+            //addRef('../static/js/promise.min.js');
 
             var mainDivEle = document.getElementById(this.mainDiv);
             //Create navigation
-
+            
             var mainMenuDiv = addEle(mainDivEle, 'div', this.constants.mainMenuDivId, 'nav');
             var mainMenuUl = addEle(mainMenuDiv, 'ul');
             var mainMenuSaveLi = addEle(mainMenuUl, 'li', this.constants.saveButtonId, 'actionButton');

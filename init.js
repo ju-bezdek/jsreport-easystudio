@@ -1,10 +1,15 @@
-var init = function(appModule,config){
+var init = function(appModule,config, localization){
 
     appModule.language =  config.language || "en-US";
-    appModule.localization= config.localization;
+    localization=localization||{};
+
+    if (config.localization)
+        appModule.localization= Object.assign(localization, config.localization);
+    else
+        appModule.localization=localization;
 
     if (!config.templateStore.type){
-        config.templateStore.type ="api ";
+        throw "template store type not specified";
     }
     //Initialize template store
     if (config.templateStore.type ==="api")
@@ -18,9 +23,22 @@ var init = function(appModule,config){
         }else{
             appModule.templateStoreClient = new Client(config.templateStore.clientOptions);
         }
+        if ( config.templateStore.urlAll){
+            appModule.templateStoreClient.registerMethod("getAllTemplates", config.templateStore.urlAll|| config.templateStore.url , "GET");
+        }
+        if ( config.templateStore.urlNew){
+            appModule.templateStoreClient.registerMethod("getNewTemplate", config.templateStore.urlNew , "GET");
+        }
         appModule.templateStoreClient.registerMethod("getTemplateById", config.templateStore.url.replace(config.templateStore.idPlaceHolder || ":id", "${id}") , "GET");
         appModule.templateStoreClient.registerMethod("setTemplateById", config.templateStore.url.replace(config.templateStore.idPlaceHolder || ":id", "${id}") , "POST");
 
+        appModule.getAllTemplates = function(){
+            appModule.templateStoreClient.methods["getAllTemplates"]({},
+                function (data, response) {
+                    return data;
+                }
+            );
+        };
         appModule.getTemplate = function(id){
             appModule.templateStoreClient.methods["getTemplateById"]({ "path":{"id":id}},
                 function (data, response) {
@@ -37,8 +55,10 @@ var init = function(appModule,config){
         };
     }
     else if (config.templateStore.type==="func"){
+        appModule.getAllTemplates =config.templateStore.getAllTemplates;
         appModule.getTemplate =config.templateStore.getTemplate;
         appModule.setTemplate =config.templateStore.setTemplate;
+        appModule.getNewTemplate =config.templateStore.getNewTemplate;
     }
     else{throw "invalid config.templateStore.type = "+config.templateStore.type+" ... but can be 'func' or 'api', nothing else";}
 
@@ -161,4 +181,4 @@ var init = function(appModule,config){
 }
 
 exports.init = init;
-exports.create = function (config){ return init({}, config)};
+exports.create = function (config, localization){ return init({}, config,localization)};

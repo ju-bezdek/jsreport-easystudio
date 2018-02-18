@@ -2,6 +2,8 @@
     "templateStore":{
         "type":"api",
         "url":"localhost/getTemplate/:id",
+        "urlAll":"localhost/getAllTemplates",
+        "urlAll":"localhost/getNewTemplate",
         "idPlaceHolder":":id",
         "clientOptions":null
     },

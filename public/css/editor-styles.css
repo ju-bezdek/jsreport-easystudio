@@ -20,7 +20,7 @@
   background-color:  rgb(66, 66, 66);
 }
 #jsReportEasyStudioEditor-MainMenu ul.mainMenu {
-  padding: 5px ;
+  padding: 2px ;
 }
 
 #jsReportEasyStudioEditor-SubMenu li.active{
@@ -87,23 +87,27 @@
 
 #jsReportEasyStudioEditor-MainMenu.nav ul li.actionButton a:hover
 {
-  background-color: rgb(36, 132, 187);
+  background-color: rgb(119, 152, 172);
 }
 #jsReportEasyStudioEditor-SubMenu ul li:hover {
   
-  border-width: 5px;
+  border-width: px;
   border-bottom-style: solid;
-  border-color: rgb(36, 132, 187);
+  border-color: rgb(125, 158, 177);
 }
 
 #jsReportEasyStudioEditor-MainMenu.nav ul li a {
   display: block;
   color: white;
   text-align: center;
-  padding:  10px 10px;
+  padding:  6px 10px;
   text-decoration: none;
 }
-
+#jsReportEasyStudioEditor-MainMenu .active{
+  border-width: 4px;
+  border-bottom-style: solid;
+  border-color: rgb(187, 187, 187);
+}
 /* Change the link color to #111 (black) on hover */
 
 #jsReporTemplatetEditor nav ul li a:hover {
