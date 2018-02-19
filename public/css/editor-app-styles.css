@@ -1,7 +1,25 @@
+html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+#list-icon{
+    font-size:2em;
+    color: rgba(255, 255, 255, 0.5);
+    padding-right: 10px;
+    margin-top: -2px;
+    margin-left: -2px;
+}  
+#list-icon:hover{
+    color: rgba(255, 255, 255, 0.9);
+} 
 #header {
     background-color: rgb(87, 87, 87);
     padding: 5px;
 }
+
 #header input {
     background-color: rgb(99, 99, 99);
     color: white;

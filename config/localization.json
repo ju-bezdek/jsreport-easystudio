@@ -13,6 +13,9 @@
         "newNamePlaceholder":"Neue schablone"
     },
     "sk": {
+        "id":"Id",
+        "name":"Názov",
+        "templatesLabel":"Šablóny",
         "code": "Zdrojový kód",
         "editor": "Editor",
         "insertData": "Vložiť dátové pole",
@@ -23,6 +26,9 @@
         "header":"Hlavička",
         "footer":"Pätička",
         "options":"Nastavenia",
-        "newNamePlaceholder":"Nová šablóna"
+        "newNamePlaceholder":"Nová šablóna",
+        "noDataLabel":"Nič tu nie je ... buď prvý ktorý vytvorí novú šablónu",
+        "newTemplateLabel":"Nová šablóna"
+    
     }
 }

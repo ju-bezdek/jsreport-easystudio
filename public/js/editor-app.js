@@ -73,7 +73,7 @@
        url: '/new',
        success: function (response) {
          //data.id = response.id;
-         if(response.id){
+         if(response.id!==undefined &&response.id!==null){
            history.pushState(null, "List", "/list");
            window.location.replace("edit/"+response.id);
          }

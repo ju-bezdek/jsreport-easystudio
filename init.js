@@ -128,7 +128,6 @@ var init = function(appModule,config, localization){
     
         function createDataParametersForExampleCore (obj, path, group, options){
             var resArray = [];
-            
     
             Object.keys(obj).forEach(function(p)
             {
@@ -140,7 +139,6 @@ var init = function(appModule,config, localization){
                         };
                     resArray.push(
                         {
-                            
                             caption:p+ '[]',
                             value: newGroup.start + "<br/><br/>"+newGroup.end,
                             //get schema only by first element

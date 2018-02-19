@@ -7,8 +7,8 @@ $(window).on("load",function(){
     textArea.id=myId
    wysiwygDiv.appendChild(textArea);
     tinymce.init({
-        language: jsReportEasyStudioEditor.language,
-        language_url : '../static/tinymce_langs/'+jsReportEasyStudioEditor.language+'.js',
+        language: jsReportEasyStudioEditor.language!=='en-US' && jsReportEasyStudioEditor.language,
+        language_url : jsReportEasyStudioEditor.language!=='en-US' && '../static/tinymce_langs/'+jsReportEasyStudioEditor.language+'.js',
         selector: '#'+myId,
         height: 500,
         menubar: false,

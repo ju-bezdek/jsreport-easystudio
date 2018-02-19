@@ -6,7 +6,7 @@
 
 <div class="template-list">
 <div class="table-title ">
-    <p>Templates</p>
+    <p>{{templatesLabel}}</p>
 
 </div>
 <table>
@@ -61,14 +61,14 @@
             </tr>
         {{else}}
             <tr>
-                <td colspan="2">Nothing here ... please create some template</td>
+                <td colspan="2">{{noDataLabel}}</td>
             </tr>
         {{/each}}
     </tbody>
 </table>
     <a href="/new"> 
     <button class="add">
-        <i class="fas fa-plus"></i> New template
+        <i class="fas fa-plus"></i> {{newTemplateLabel}} 
     </button>
     </a>
 </div>

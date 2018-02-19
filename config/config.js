@@ -14,7 +14,7 @@ global.demoTemplate=JSON.stringify({id:null,
 exports.config = {
     //Do not set this, unles you want add or override certain language
     "localization":null,
-    "language":"sk",
+    "language":"en-US",
     "templateStore":{
         "type":"func",
 

@@ -207,14 +207,21 @@ app.get('/new', function (req, res) {
 app.get('/list', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
+    let lang = jsReportApp.localization[jsReportApp.language];
     const header={
-        id:jsReportApp.localization['id']||'Id',
-        name:jsReportApp.localization['name']||'Name',
+        id:lang&&lang['id']||'Id',
+        name:lang&&lang['name']||'Name',
         //comment:jsReportApp.localization['comment']||'Comment',
         //lastModiftime:jsReportApp.localization['lastModiftime']||'Last modified',
         //age:jsReportApp.localization['age']||'Age',
     }
-    res.render('list', { layout: 'main', requestUrl: '/list', templates:jsReportApp.getAllTemplates(), header:header})
+    res.render('list', { layout: 'main', requestUrl: '/list',
+     templates:jsReportApp.getAllTemplates(), 
+     header:header, 
+     templatesLabel:lang&&lang['templatesLabel']||'Templates',
+     newTemplateLabel:lang&&lang['newTemplateLabel']||'New template',
+     noDataLabel:lang&&lang['noDataLabel']||'Nothing in here ... be the first to create new template'
+    })
 });
 
 app.listen(8080, () => console.log('app running'))

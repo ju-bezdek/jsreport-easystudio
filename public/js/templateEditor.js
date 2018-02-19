@@ -44,18 +44,6 @@
                 header:"Header",
                 footer:"Footer",
                 options:"Configuration"
-            },
-            "sk": {
-                code: "Zdrojový kód",
-                editor: "Editor",
-                insertData: "Vložiť dátové pole",
-                save: "Uložiť",
-                cantInsertHere: "Sem nie je možné vložiť tento prvok",
-                preview: "Ukážka",
-                body:"Hlavná šablóna",
-                header:"Hlavička",
-                footer:"Pätička",
-                options:"Nastavenia"
             }
         },
 
@@ -451,7 +439,6 @@
                 ele.id = jsReportEasyStudioEditor.constants.submenuItemIdPrefix + item.key;
                 ele.setAttribute('templateId', item.key);
                 var anchor = document.createElement('a');
-                anchor.href = "#";
                 ele.appendChild(anchor);
                 var localizeCaption = jsReportEasyStudioEditor.localizedTexts[jsReportEasyStudioEditor.language][item.key]
                 anchor.appendChild(document.createTextNode(item.caption || localizeCaption|| item.key));
@@ -561,7 +548,6 @@
             var mainMenuSaveLi = addEle(mainMenuUl, 'li', this.constants.saveButtonId, 'actionButton');
             var mainMenuSaveLink = addEle(mainMenuSaveLi, 'a');
             this.saveButton = mainMenuSaveLink;
-            mainMenuSaveLink.href = "#";
             mainMenuSaveLink.onclick = function () {
                 jsReportEasyStudioEditor.save(jsReportEasyStudioEditor.templateEditorData);
             }
@@ -570,7 +556,6 @@
 
             var mainMenuEditorLink = addEle(mainMenuEditorLi, 'a');
             mainMenuEditorLink.id = this.constants.wysiwygEditorButton;
-            mainMenuEditorLink.href = "#";
             mainMenuEditorLink.classList.add('active')
             mainMenuEditorLink.appendChild(document.createTextNode(this.localizedTexts[this.language].editor));
             mainMenuEditorLink.setAttribute('show', '#' + this.constants.wysiwygDivId);
@@ -578,7 +563,6 @@
             var mainMenuCodeLi = addEle(mainMenuUl, 'li', this.constants.codeButtonId, 'actionButton');
             var mainMenuCodeLink = addEle(mainMenuCodeLi, 'a');
             mainMenuCodeLink.id = this.constants.codeEditorButton;
-            mainMenuCodeLink.href = "#";
             mainMenuCodeLink.appendChild(document.createTextNode(this.localizedTexts[this.language].code));
             mainMenuCodeLink.setAttribute('show', '#' + this.constants.codeDivId);
 
@@ -632,7 +616,6 @@
 
             var mainMenuPreviewLi = addEle(mainMenuUl, 'li', this.constants.codeButtonId, 'actionButton');
             var mainMenuPreviewLink = addEle(mainMenuPreviewLi, 'a');
-            mainMenuPreviewLink.href = "#";
             mainMenuPreviewLink.appendChild(document.createTextNode(this.localizedTexts[this.language].preview));
             mainMenuPreviewLink.onclick = function () {
                 RequestFile('/preview', jsReportEasyStudioEditor.templateEditorData, 'application/pdf') //TODO: vyčistiť!!!  formát predsa neviem dopretu !!!
