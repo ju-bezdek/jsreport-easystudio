@@ -39,20 +39,20 @@ Integrated editor is based on [monaco-editor](https://github.com/Microsoft/monac
 ## Configuration
 
 Config with json:
-```json
+```javascript
 {
     "templateStore":{ 
         "type":"api",
-        "url":"localhost/getTemplate/:id",
-        "urlAll":"localhost/getAllTemplates",
-        "urlNew":"localhost/getNewTemplate",
-        "idPlaceHolder":":id",
-        "clientOptions":null
+        "url":"localhost/getTemplate/:id", //base endpoint
+        "urlAll":"localhost/getAllTemplates", //endpoint returning all avalible tempkates
+        "urlNew":"localhost/getNewTemplate", //endpoint returing initial template
+        "idPlaceHolder":":id", //string to be replaced by Id of template
+        "clientOptions":null //node-rest-client options
     },
     "dataProviderStores":[
         {
             "id":"main",
-            "type":"api",
+            "type":"api", //api | func (only for .js config)
             "url":"localhost/getData/:sourceId?:parameters",
             "sourceIdPlaceHolder":":sourceId",
             "parametersPlaceholder":":parameters"
