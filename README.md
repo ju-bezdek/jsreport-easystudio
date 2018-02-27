@@ -31,7 +31,7 @@ Editor has integraded preview
 ![Preview](/Docs/easyStudio_editPreview.gif)
 
 ### Intrgrated code editor
-Integrated editor is base on [monaco-editor](https://github.com/Microsoft/monaco-editor) ... powerfull code editor used in [Visual Studio Code](https://code.visualstudio.com)!
+Integrated editor is based on [monaco-editor](https://github.com/Microsoft/monaco-editor) ... powerfull code editor used in [Visual Studio Code](https://code.visualstudio.com)!
 
 ![Copy&Paste](/Docs/easyStudio_codeEditor.gif)
 
@@ -66,7 +66,7 @@ You can set clientOptions for advanced settind like authorization, proxy setting
 Json should have some templateStore configured.
 It is expected thad these endpoints will return Json in structire like this:
 
-```json
+```javascript
         [
             {
                 "id":null, 
@@ -95,7 +95,7 @@ GET on "urlAll" should return structure like this:
             "id":1, 
             "name":"First template"
         },
-        {...}
+        //...
     ]
 ```
 
