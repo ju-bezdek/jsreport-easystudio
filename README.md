@@ -18,12 +18,15 @@ Check out the [jsReport](https://github.com/jsreport) project on [GitHub reposit
 Integrated designer is based on [TinyMCE](http://tinymce.com/) WYSIWYG editor 
 
 It automaticaly generates avalible fields into menu, based on demo data you can provide
+
 ![Datafields](/Docs/easyStudio_insertField.gif)
 
 You can also insert, edit, and even paste images from clipboard
+
 ![Copy&Paste](/Docs/easyStudio_Images.gif)
 
 Editor has integraded preview
+
 ![Preview](/Docs/easyStudio_editPreview.gif)
 
 ### Intrgrated code editor
