@@ -5,9 +5,10 @@ Simplified node.js studio for editing jsReport templates.
 Check out the [jsReport](https://github.com/jsreport) project on [GitHub repository](https://jsreport.net)
 
 [>> Live demo <<](https://jsreport-easystudio.azurewebsites.net/new)
+
 (preview feature currently does't work since I wasn't able to figure out how to get it work on Azure:)
 
-###Supported output types:
+### Supported output types:
 - pdf
 - xlsx
 - docx
