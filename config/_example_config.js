@@ -2,12 +2,19 @@ exports = {
     "templateStore":{
         "type":"func",
         /**
-         * Function returns array of objects like [
-            {"key": "body", "value":"<h1>hello body</h1>", "caption":"Main body of document"},
-            {"key": "header", "value":"<h1>hello header</h1>", "caption":"Header"},
-            {"key": "footer", "value":"<h1>hello footer</h1>", "caption":"Footer"},
-            {"key": "options", "type":"JSON", "value":"{ output:'pdf', margin:'', format:'A4'}", "caption":"Configuration"}
-        ]
+         * Function returns array of objects like 
+         * [
+         * {id:null, 
+                name:"",
+                lastModiftime:null,
+                comment:"",
+                templateParts:[
+                {"key": "body", "value":"<h1>hello body</h1>"},
+                {"key": "header", "value":"<h1>hello header</h1>"}, //optional
+                {"key": "footer", "value":"<h1>hello footer</h1>"}, //optional
+                {"key": "options", "type":"JSON", "value": JSON.stringify({ 'output':'pdf', 'margin':'null' , 'format':'A4', dataSourceId:"demo", dataStore:"demo" })} //optional but recomended
+                ]}
+            ]
          */
         getTemplate:function(id){
             return JSON.stringify([

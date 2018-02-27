@@ -3,20 +3,17 @@
         "type":"api",
         "url":"localhost/getTemplate/:id",
         "urlAll":"localhost/getAllTemplates",
-        "urlAll":"localhost/getNewTemplate",
+        "urlNew":"localhost/getNewTemplate",
         "idPlaceHolder":":id",
         "clientOptions":null
     },
-
     "dataProviderStores":[
         {
             "id":"main",
             "type":"api",
             "url":"localhost/getData/:sourceId?:parameters",
             "sourceIdPlaceHolder":":sourceId",
-            "parametersPlaceholder":":parameters",
-            
+            "parametersPlaceholder":":parameters"
         }
-
     ]
 }
