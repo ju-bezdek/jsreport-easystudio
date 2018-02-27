@@ -533,8 +533,9 @@
             if (typeof window['jQuery'] == 'undefined') {
                 addRef('../static/js/jquery.min.js')
             }
-
+            
             addRef('../node_modules/monaco-editor/min/vs/loader.js');
+            addRef('../node_modules/monaco-editor/min/vs/editor/editor.main');
             addRef('../node_modules/tinymce/tinymce.min.js');
             
             addRef('../static/js/editor.toolbar.js');

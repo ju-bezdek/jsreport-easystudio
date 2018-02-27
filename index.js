@@ -71,7 +71,7 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.use('/static', express.static('public'));
 //Publish node modeules
-app.use('/node_modules/monaco-editor', express.static(__dirname + '/node_modules/monaco-editor'));
+app.use('/node_modules/monaco-editor/min/vs/', express.static(__dirname + '/node_modules/monaco-editor/min/vs/'));
 app.use('/node_modules/tinymce', express.static(__dirname + '/node_modules/tinymce'));
 
 app.use(bodyParser.json({limit: '15mb'}));
@@ -224,7 +224,7 @@ app.get('/list', function (req, res) {
     })
 });
 
-app.listen(8080, () => console.log('app running'))
+app.listen(process.env.PORT || 8080, () => console.log('app running'))
 
 
 

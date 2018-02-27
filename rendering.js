@@ -1,11 +1,11 @@
 (function(){
     var jsreport = require('jsreport-core')({
-        tasks:{
-        "strategy": "in-process"
-        },
-        "phantom": {   
-            "defaultPhantomjsVersion": "2.1.1"
-          }
+        // tasks:{
+        // "strategy": "in-process"
+        // },
+        // "phantom": {   
+        //     "defaultPhantomjsVersion": "2.1.1"
+        //   }
     });
 
     renderingHelpers = require('./public/js/rendering.helpers');
