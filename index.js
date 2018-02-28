@@ -71,7 +71,8 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.use('/static', express.static('public'));
 //Publish node modeules
-app.use('/node_modules/monaco-editor/min/vs/', express.static(__dirname + '/node_modules/monaco-editor/min/vs/'));
+app.use('/node_modules/monaco-editor/min/vs/', express.static(__dirname + '/node_modules/monaco-editor/min/vs'));
+app.use('/node_modules/monaco-editor/min/vs/editor/', express.static(__dirname + '/node_modules/monaco-editor/min/vs/editor'));
 app.use('/node_modules/tinymce', express.static(__dirname + '/node_modules/tinymce'));
 
 app.use(bodyParser.json({limit: '15mb'}));
@@ -96,7 +97,7 @@ app.get('/', function (req, res) {
 app.get('/render-report/:templateId', function (req, res) {
     var templateId=req.params.templateId;
     var parameters = req.query;
-    var templateData = jsReportApp.getTemplate(templateId);
+    var templateData = jsReportApp.getTemplate(templateId).templateParts;
     if (typeof templateData === "string") {
         templateData = JSON.parse(templateData);
     }
@@ -114,11 +115,12 @@ app.get('/render-report/:templateId', function (req, res) {
  */
 app.post('/preview', function (req, res) {
     var templateId=req.params.id;
-    var options= jsReportApp.getTemplateOptions(templateId);
+    
+    var options= jsReportApp.parseOptions(req.body);
     if (options && options.dataSourceId)
     {
         var demoData = jsReportApp.dataProviderStores[options.dataStore||'default'].getDemoData(options.dataSourceId);
-        jsReportApp.rendering.renderTemplate(res, req.body, demoData);
+        jsReportApp.rendering.renderTemplate(res, req.body.templateParts, demoData);
     }
 });
 

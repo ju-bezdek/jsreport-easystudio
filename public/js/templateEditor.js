@@ -535,7 +535,7 @@
             }
             
             addRef('../node_modules/monaco-editor/min/vs/loader.js');
-            addRef('../node_modules/monaco-editor/min/vs/editor/editor.main');
+            //addRef('../node_modules/monaco-editor/min/vs/editor/editor.main.js');
             addRef('../node_modules/tinymce/tinymce.min.js');
             
             addRef('../static/js/editor.toolbar.js');
@@ -597,10 +597,15 @@
                 request.send(JSON.stringify(data));
 
                 jsReportEasyStudioEditor.wait(true);
+                request.timeout=60000;
+                request.ontimeout = function(){
+                    jsReportEasyStudioEditor.wait(false);
+                    
+                }
                 request.onreadystatechange = function () {
                     if (request.readyState === 4) {
                         jsReportEasyStudioEditor.wait(false);
-                        var header = parseResponseHeaders(request.getAllResponseHeaders());
+                        var header = parseResponseHeaders(request.getAllResponseHeaders().toLowerCase());
                         //can preview context?
                         var contType = header["content-type"];
                         var extension = (contType.indexOf('application/') == 0 && contType.substr('application/'.length)) || (contType.indexOf('text/') == 0 && "txt")
@@ -619,7 +624,7 @@
             var mainMenuPreviewLink = addEle(mainMenuPreviewLi, 'a');
             mainMenuPreviewLink.appendChild(document.createTextNode(this.localizedTexts[this.language].preview));
             mainMenuPreviewLink.onclick = function () {
-                RequestFile('/preview', jsReportEasyStudioEditor.templateEditorData, 'application/pdf') //TODO: vyčistiť!!!  formát predsa neviem dopretu !!!
+                RequestFile('/preview', jsReportEasyStudioEditor.template, 'application/pdf') //TODO: vyčistiť!!!  formát predsa neviem dopretu !!!
 
             }
 

@@ -8,7 +8,20 @@ global.demoTemplate=JSON.stringify({id:null,
     {"key": "body", "value":"<h1>hello body</h1>"},
     {"key": "header", "value":"<h1>hello header</h1>"}, //optional
     {"key": "footer", "value":"<h1>hello footer</h1>"}, //optional
-    {"key": "options", "type":"JSON", "value": JSON.stringify({ 'output':'pdf', 'margin':'null' , 'format':'A4', dataSourceId:"demo", dataStore:"demo" })} //optional but recomended
+    {"key": "options", "type":"JSON", "value": JSON.stringify(
+        {
+            "output": "pdf",
+            "dataSourceId": "demo",
+            "dataStore": "demo",
+            "specialSettings":{
+                "orientation":"landscape",
+                "format":"A4",
+                "headerHeight":"3cm",
+                "footerHeight":"3cm",
+                "margin":"1cm"
+            }
+        }
+    )} //optional but recomended
 ]});
 
 exports.config = {

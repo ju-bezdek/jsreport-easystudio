@@ -1,12 +1,21 @@
 (function(){
-    var jsreport = require('jsreport-core')({
-        // tasks:{
-        // "strategy": "in-process"
-        // },
-        // "phantom": {   
-        //     "defaultPhantomjsVersion": "2.1.1"
-        //   }
-    });
+    var settings = { 
+        tasks:{
+        // "strategy": "in-process" //faster, but less safe
+        "timeout": 30000,
+        "allowedModules": "*"
+
+        },
+        "scripts": {
+            "allowedModules": "*",
+            "timeout": 60000
+          }
+        };
+    if (process.platform =="darwin") //If MaxOS (don't ask me why there is darwin constant for mac...)
+        settings.phantom= {   
+            "defaultPhantomjsVersion": "2.1.1"
+          };
+    var jsreport = require('jsreport-core')(settings);
 
     renderingHelpers = require('./public/js/rendering.helpers');
 

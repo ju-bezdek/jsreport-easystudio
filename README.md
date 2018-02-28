@@ -102,7 +102,71 @@ GET on "urlAll" should return structure like this:
 Alternatively you can configure app alse by javacsript file named config.js. In this case you can set your own javascript methods. Take a look at: [_example_config.js](config/_example_config.js)
 
 ##User configuration
- ...TODO...
+
+Configuration can be set in Options TAB (template part). 
+It has to be in JSON format and must contains this parameters:
+```JSON
+{
+    "output": "pdf",
+    "dataStore": "demoProvider",
+    "dataSourceId": "demo"
+}
+```
+
+* output - one of supported file format [ pdf | xlsx | docx | txt | html ]
+* dataStore - id of dataProviderStore defined in config [see config](#configuration)
+* dataSourceId - id of datasource, that is dataStore mentioned above capable provide:) ... basicaly it's the first parameter that will be pass into getData() function -in case of 'func' dataProviderType, or will be replaced in the url for sourceIdPlaceHolder - in case of 'api' dataProviderType.
+
+###Pdf specific configuration
+
+You can enhance basic configuration mentioned above by these 'PDF specific' parameters:
+
+* margin - px or cm specification of margin used from page borders, you can also pass an Object or JSON object string for better control of each margin side. ex: 
+```JSON
+    { 
+        "top": "5px", 
+        "left": "10px", 
+        "right": "10px", 
+        "bottom": "5px" 
+    }
+```
+* format - predefined page sizes containing A3, A4, A5, Legal, Letter
+* width - px or cm page width, takes precedence over paper format
+* height - px or cm page height, takes precedence over paper format
+* orientation - portrait or landscape orientation
+* headerHeight - px or cm height of the header in the page
+* footerHeight - px or cm height of the footer in the page
+* printDelay - delay between rendering a page and printing into pdf, this is useful when printing animated content like charts
+* blockJavaScript - block executing javascript
+* waitForJS - true/false <<WARNING!>> use this only if there is something like this in body of template:
+```HTML
+<script>
+    // do some calculations or something async
+    setTimeout(function() {
+        window.JSREPORT_READY_TO_START = true; //this will start the pdf printing
+    }, 500);
+    ...
+</script>
+```
+
+Example:
+```JSON
+
+{
+    "output": "pdf",
+    "dataSourceId": "demo",
+    "dataStore": "demo",
+    "specialSettings":{
+        "orientation":"landscape",
+        "format":"A3",
+        "headerHeight":"5cm",
+        "footerHeight":"0cm",
+        "margin":"1cm"
+    }
+}
+```
+
+Read more in original jsReport [phantom-pdf recipe learn section](https://jsreport.net/learn/phantom-pdf)
 
 ## Usage
 
