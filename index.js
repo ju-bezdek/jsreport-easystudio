@@ -65,22 +65,29 @@ const handlebars = exphbs.create({
     }
 });
 
-
 //Init express APP
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.use('/static', express.static('public'));
-//Publish node modeules
-app.use('/node_modules/monaco-editor/min/vs/', express.static(__dirname + '/node_modules/monaco-editor/min/vs'));
-app.use('/node_modules/monaco-editor/min/vs/editor/', express.static(__dirname + '/node_modules/monaco-editor/min/vs/editor'));
-app.use('/node_modules/tinymce', express.static(__dirname + '/node_modules/tinymce'));
-
 app.use(bodyParser.json({limit: '15mb'}));
 app.use(bodyParser.urlencoded({
     limit: '15 mb', 
     extended: false,
-
   }));
+
+var router = express.Router()
+
+
+
+
+
+
+router.use('/static', express.static('public'));
+//Publish node modeules
+router.use('/node_modules/monaco-editor/min/vs/', express.static(__dirname + '/node_modules/monaco-editor/min/vs'));
+router.use('/node_modules/monaco-editor/min/vs/editor/', express.static(__dirname + '/node_modules/monaco-editor/min/vs/editor'));
+router.use('/node_modules/tinymce', express.static(__dirname + '/node_modules/tinymce'));
+
+
 
 
 
@@ -89,12 +96,12 @@ app.use(bodyParser.urlencoded({
 /**
  * Home view
  */
-app.get('/', function (req, res) {
+router.get('/', function (req, res) {
     res.render('home', {layout: 'main'});
 });
 
 // TODO: toto treba doriešiť... typicky je parametrom idčko šablony a data formou post/get
-app.get('/render-report/:templateId', function (req, res) {
+router.get('/render-report/:templateId', function (req, res) {
     var templateId=req.params.templateId;
     var parameters = req.query;
     var templateData = jsReportApp.getTemplate(templateId);
@@ -113,7 +120,7 @@ app.get('/render-report/:templateId', function (req, res) {
 /**
  * Preview for template
  */
-app.post('/preview', function (req, res) {
+router.post('/preview', function (req, res) {
     var templateId=req.params.id;
     
     var options= jsReportApp.parseOptions(req.body);
@@ -124,7 +131,7 @@ app.post('/preview', function (req, res) {
     }
 });
 
-app.get('/getTemplate/:id', function(req,res){
+router.get('/getTemplate/:id', function(req,res){
     //  console.log('req:getTemplate');
         res.contentType('application/json');
         var data = jsReportApp.getTemplate(req.params.id);
@@ -132,7 +139,7 @@ app.get('/getTemplate/:id', function(req,res){
 }
 );
 
-app.get('/getNewTemplate', function(req,res){
+router.get('/getNewTemplate', function(req,res){
     //  console.log('req:getTemplate');
         res.contentType('application/json');
         var data = jsReportApp.getNewTemplate();
@@ -140,7 +147,7 @@ app.get('/getNewTemplate', function(req,res){
 }
 );
 
-app.get('/getAllTemplates', function(req,res){
+router.get('/getAllTemplates', function(req,res){
     //  console.log('req:getTemplate');
         res.contentType('application/json');
         var data = jsReportApp.getAllTemplates();
@@ -148,7 +155,7 @@ app.get('/getAllTemplates', function(req,res){
 }
 );
 
-app.get('/getTemplateDataParams/:id', function(req,res){
+router.get('/getTemplateDataParams/:id', function(req,res){
     //console.log('req:getTemplateParams');
     res.contentType('application/json');
     var templateId;
@@ -166,7 +173,7 @@ app.get('/getTemplateDataParams/:id', function(req,res){
 /**
  * save template
  */
-app.post('/setTemplate/:id', function(req,res){
+router.post('/setTemplate/:id', function(req,res){
     console.log('req:setTemplate');
     var result = jsReportApp.setTemplate(req.params.id,req.body );
     res.contentType('application/json');
@@ -174,14 +181,14 @@ app.post('/setTemplate/:id', function(req,res){
 }
 );
 
-app.post('/new', function (req, res) {
+router.post('/new', function (req, res) {
     var result = jsReportApp.setTemplate(null,req.body );
     res.contentType('application/json');
     res.send(result);
 });
 
 
-app.get('/edit/:id', function (req, res) {
+router.get('/edit/:id', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
     var showList = !!jsReportApp.getAllTemplates;
@@ -194,13 +201,13 @@ app.get('/edit/:id', function (req, res) {
     )
 });
 
-app.get('/new', function (req, res) {
+router.get('/create/new', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
     var showList = !!jsReportApp.getAllTemplates;
     res.render('editTemplate', {
         layout: 'main', 
-        requestUrl: '/edit', 
+        requestUrl: 'create/new', 
         easyAppState: JSON.stringify({templateId:req.params.id, language: jsReportApp.language, localization: jsReportApp.localization}) ,
         showList:showList
        }               
@@ -210,7 +217,7 @@ app.get('/new', function (req, res) {
 
 
 
-app.get('/list', function (req, res) {
+router.get('/list', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
     let lang = jsReportApp.localization[jsReportApp.language];
@@ -230,6 +237,8 @@ app.get('/list', function (req, res) {
     })
 });
 
+
+app.use("/reporting", router);
 app.listen(process.env.PORT || 8080, () => console.log('app running'))
 
 

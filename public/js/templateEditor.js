@@ -624,7 +624,7 @@
             var mainMenuPreviewLink = addEle(mainMenuPreviewLi, 'a');
             mainMenuPreviewLink.appendChild(document.createTextNode(this.localizedTexts[this.language].preview));
             mainMenuPreviewLink.onclick = function () {
-                RequestFile('/preview', jsReportEasyStudioEditor.template, 'application/pdf') //TODO: vyčistiť!!!  formát predsa neviem dopretu !!!
+                RequestFile('../preview', jsReportEasyStudioEditor.template, 'application/pdf') //TODO: vyčistiť!!!  formát predsa neviem dopretu !!!
 
             }
 

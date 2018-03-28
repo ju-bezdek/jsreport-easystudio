@@ -19,7 +19,7 @@
      nameField.value=data.name;
 
   jsReportEasyStudioEditor.loadData(dataJson);
-  jQuery.get('/getTemplateDataParams/' + easyAppState.templateId, null, function (dataJson) {
+  jQuery.get('../getTemplateDataParams/' + easyAppState.templateId, null, function (dataJson) {
     if (typeof dataJson == 'string') {
       dataJson = JSON.parse(dataJson);
     }
@@ -33,7 +33,7 @@
  if (easyAppState.templateId) {
    //New template
    jsReportEasyStudioEditor.onLoad = function () {
-     jQuery.get('/getTemplate/' + easyAppState.templateId, null, function (dataJson) {
+     jQuery.get('../getTemplate/' + easyAppState.templateId, null, function (dataJson) {
       afterLoadData(dataJson);
      });
      
@@ -47,7 +47,7 @@
        type: 'POST',
        data: JSON.stringify(data),
        contentType: 'application/json',
-       url: '/setTemplate/' + data.id,
+       url: '../setTemplate/' + data.id,
        success: function (response) {
          data.id = response.id;
        }
@@ -58,7 +58,7 @@
  else {
    //edit existing tempplate
    jsReportEasyStudioEditor.onLoad = function () {
-     jQuery.get('/getNewTemplate', null, function (dataJson) {
+     jQuery.get('../getNewTemplate', null, function (dataJson) {
       afterLoadData(dataJson);
    })};
    jsReportEasyStudioEditor.saveMethod = function (data) {
@@ -70,12 +70,12 @@
        type: 'POST',
        data: JSON.stringify(data),
        contentType: 'application/json',
-       url: '/new',
+       url: '../new',
        success: function (response) {
          //data.id = response.id;
          if(response.id!==undefined &&response.id!==null){
            history.pushState(null, "List", "/list");
-           window.location.replace("edit/"+response.id);
+           window.location.replace(window.location.toString().replace('create/new', "./edit/"+response.id));
          }
        }
      });
