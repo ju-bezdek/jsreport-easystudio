@@ -87,6 +87,21 @@ router.use('/node_modules/monaco-editor/min/vs/', express.static(__dirname + '/n
 router.use('/node_modules/monaco-editor/min/vs/editor/', express.static(__dirname + '/node_modules/monaco-editor/min/vs/editor'));
 router.use('/node_modules/tinymce', express.static(__dirname + '/node_modules/tinymce'));
 
+const asynchResponse=function(data, preprocess, callback){
+    if(!preprocess)
+        preprocess=(t)=>{return t;}
+
+    if (data && typeof data["then"] ==="function")
+            data.then((data)=>
+                {
+                    callback(preprocess(data));
+                }    
+            );
+        else if (data)
+            callback(preprocess(data));
+        else
+            callback(null);
+}
 
 
 
@@ -127,7 +142,9 @@ router.post('/preview', function (req, res) {
     if (options && options.dataSourceId)
     {
         var demoData = jsReportApp.dataProviderStores[options.dataStore||'default'].getDemoData(options.dataSourceId);
-        jsReportApp.rendering.renderTemplate(res, req.body.templateParts, demoData);
+        asynchResponse(demoData,null, function(data){
+            jsReportApp.rendering.renderTemplate(res, req.body.templateParts, data);
+        });
     }
 });
 
@@ -135,7 +152,7 @@ router.get('/getTemplate/:id', function(req,res){
     //  console.log('req:getTemplate');
         res.contentType('application/json');
         var data = jsReportApp.getTemplate(req.params.id);
-        res.send(data);
+        asynchResponse(data,null, (t)=>res.send(t) );
 }
 );
 
@@ -143,7 +160,7 @@ router.get('/getNewTemplate', function(req,res){
     //  console.log('req:getTemplate');
         res.contentType('application/json');
         var data = jsReportApp.getNewTemplate();
-        res.send(data);
+        asynchResponse(data,null, (t)=>res.send(t) );
 }
 );
 
@@ -151,7 +168,7 @@ router.get('/getAllTemplates', function(req,res){
     //  console.log('req:getTemplate');
         res.contentType('application/json');
         var data = jsReportApp.getAllTemplates();
-        res.send(data);
+        asynchResponse(data,null, (t)=>res.send(t) );
 }
 );
 
@@ -164,7 +181,7 @@ router.get('/getTemplateDataParams/:id', function(req,res){
     if (options && options.dataSourceId)
     {
         var data = jsReportApp.dataProviderStores[options.dataStore||'default'].getDemoData(options.dataSourceId);
-        res.send(jsReportApp.createDataParametersForExample(data));
+        asynchResponse(data, jsReportApp.createDataParametersForExample, (t)=>res.send(t));
     }
 }
 );
@@ -177,14 +194,15 @@ router.post('/setTemplate/:id', function(req,res){
     console.log('req:setTemplate');
     var result = jsReportApp.setTemplate(req.params.id,req.body );
     res.contentType('application/json');
-    res.send(result);
+    
+    asynchResponse(data,null, (t)=>res.send(t) );
 }
 );
 
 router.post('/new', function (req, res) {
     var result = jsReportApp.setTemplate(null,req.body );
     res.contentType('application/json');
-    res.send(result);
+    asynchResponse(data,null, (t)=>res.send(t) );
 });
 
 
@@ -239,7 +257,7 @@ router.get('/list', function (req, res) {
 
 
 app.use("/reporting", router);
-app.listen(process.env.PORT || 8080, () => console.log('app running'))
+app.listen(process.env.PORT || 8080, () => console.log('app running on port ' + (process.env.PORT || 8080)))
 
 
 

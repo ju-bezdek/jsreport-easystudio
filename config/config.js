@@ -96,7 +96,8 @@ exports.config = {
         {
             "id":"default",
             "type":"api",
-            "url":"localhost/getData/:sourceId?:parameters",
+            "url":"http://localhost:56891/datasource/:sourceId",
+            "templateDataUrl":"http://localhost:56891/datasource/:sourceId?contextentity=0",
             "sourceIdPlaceHolder":":sourceId",
             "parametersPlaceholder":":parameters"
             
@@ -115,7 +116,7 @@ exports.config = {
             },
             //This is optional... getData without parameters is called by default
             getDemoData: function(sourceId){
-                return {"peram1":"cool new object filled with data", "para2":{"data":"objects","plus":[{"pole": "of objects and"}, {"arrays": "of its items"}]}}; 
+                return {"param1":"cool new object filled with data", "para2":{"data":"objects","plus":[{"pole": "of objects and"}, {"arrays": "of its items"}]}}; 
             }
         },
         {

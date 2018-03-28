@@ -80,29 +80,50 @@ var init = function(appModule,config, localization){
                 }else{
                     ds.dataProviderClient = new Client(dsConfig.clientOptions);
                 }
-                ds.dataProviderClient.registerMethod("getTemplateData", dsConfig.url.replace(dsConfig.sourceIdPlaceHolder || ':sourceId', "${id}") , "GET");
-        
-                ds.getData = function(sourceId, parameters){
-                    ds.dataProviderClient.methods["getTemplateData"]({ "path":{"id":sourceId}, parameters: parameters},
-                        function (data, response) {
-                            return data;
-                        }
-                    );
-                };
+                ds.dataProviderClient.registerMethod("getData", dsConfig.url.replace(dsConfig.sourceIdPlaceHolder || ':sourceId', "${id}")
+                , "GET");
+
+       
+               ds.getData = function(sourceId, parameters){
+                   parameters = parameters||{}
+                   ds.dataProviderClient.methods["getData"]({ "path":{"id":sourceId}, "parameters":parameters },
+                       function (data, response) {
+                           return data;
+                       }
+                   );
+               };
+
+               ds.dataProviderClient.registerMethod("getDemoData", (dsConfig.templateDataUrl || dsConfig.url).replace(dsConfig.sourceIdPlaceHolder || ':sourceId', "${id}")
+               , "GET");
+               ds.getDemoData =  function(sourceId){
+                  return new Promise( function(fulfill, reject) { 
+                      try
+                      {
+                          ds.dataProviderClient.methods["getDemoData"](
+                              { "path":{"id":sourceId}}, 
+                              function (data, response) { fulfill (data);}
+                            );
+                      }
+                      catch(ex)
+                      {
+                          reject(ex);
+                      }
+                 });
+               }
 
             }
             else if (dsConfig.type==="func"){
                 ds.getData =dsConfig.getData;
+                if (dsConfig.getDemoData)
+                {
+                    ds.getDemoData=dsConfig.getDemoData;
+                }
+                else{
+                    ds.getDemoData = ds.getData;
+                }
             }
             else{throw "config.dataProviderStores["+idx+"].type ="+config.templateStore.type+" ... but can be 'func' or 'api', nothing else";}
 
-            if (dsConfig.getDemoData)
-            {
-                ds.getDemoData=dsConfig.getDemoData;
-            }
-            else{
-                ds.getDemoData = ds.getData;
-            }
 
             appModule.dataProviderStores[dsConfig.id]=ds;
         });
