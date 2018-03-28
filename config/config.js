@@ -99,7 +99,7 @@ exports.config = {
             "url":"http://localhost:56891/datasource/:sourceId",
             "templateDataUrl":"http://localhost:56891/datasource/:sourceId?contextentity=0",
             "sourceIdPlaceHolder":":sourceId",
-            "parametersPlaceholder":":parameters"
+            
             
         },
         {

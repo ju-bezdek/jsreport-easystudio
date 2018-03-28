@@ -36,10 +36,9 @@ exports = {
         {
             "id":"main",
             "type":"api",
-            "url":"localhost/getData/:sourceId?:parameters",
+            "url":"http://localhost/getData/:sourceId?:parameters",
             "sourceIdPlaceHolder":":sourceId",
-            "parametersPlaceholder":":parameters"
-            
+            "templateDataUrl":"http://localhost/getData/:sourceId?contextentity=0"
         },
         {
             "id":"demo",
