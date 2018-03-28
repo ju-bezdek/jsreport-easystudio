@@ -1,5 +1,22 @@
 var init = function(appModule,config, localization){
 
+    const returnPromise = function (client,method, args)
+    {
+        return new Promise( function(fulfill, reject) { 
+            try
+            {
+                client.methods[method](
+                    args,
+                    function (data, response) { fulfill (data);}
+                );
+            }
+            catch(ex)
+            {
+                reject(ex);
+            }
+        });
+    };
+
     appModule.language =  config.language || "en-US";
     localization=localization||{};
 
@@ -14,6 +31,8 @@ var init = function(appModule,config, localization){
     //Initialize template store
     if (config.templateStore.type ==="api")
     {
+
+
         if (!config.templateStore.url){
             throw "config.templateStore.url missing"
         }
@@ -33,25 +52,13 @@ var init = function(appModule,config, localization){
         appModule.templateStoreClient.registerMethod("setTemplateById", config.templateStore.url.replace(config.templateStore.idPlaceHolder || ":id", "${id}") , "POST");
 
         appModule.getAllTemplates = function(){
-            appModule.templateStoreClient.methods["getAllTemplates"]({},
-                function (data, response) {
-                    return data;
-                }
-            );
+            return returnPromise(appModule.templateStoreClient,"getAllTemplates",{});
         };
         appModule.getTemplate = function(id){
-            appModule.templateStoreClient.methods["getTemplateById"]({ "path":{"id":id}},
-                function (data, response) {
-                    return data;
-                }
-            );
+            return returnPromise(appModule.templateStoreClient,"getTemplateById",{ "path":{"id":id}});
         };
         appModule.setTemplate = function(id, data){
-            appModule.templateStoreClient.methods["setTemplateById"]({ "path":{"id":id}, "data":data},
-                function (data, response) {
-                    return response;
-                }
-            );
+            return returnPromise(appModule.templateStoreClient,"setTemplateById",{ "path":{"id":id}, "data":data});
         };
     }
     else if (config.templateStore.type==="func"){
@@ -83,32 +90,15 @@ var init = function(appModule,config, localization){
                 ds.dataProviderClient.registerMethod("getData", dsConfig.url.replace(dsConfig.sourceIdPlaceHolder || ':sourceId', "${id}")
                 , "GET");
 
-       
                ds.getData = function(sourceId, parameters){
                    parameters = parameters||{}
-                   ds.dataProviderClient.methods["getData"]({ "path":{"id":sourceId}, "parameters":parameters },
-                       function (data, response) {
-                           return data;
-                       }
-                   );
-               };
+                   return returnPromise(ds.dataProviderClient,"getData", { "path":{"id":sourceId}, "parameters":parameters });
+                };
 
                ds.dataProviderClient.registerMethod("getDemoData", (dsConfig.templateDataUrl || dsConfig.url).replace(dsConfig.sourceIdPlaceHolder || ':sourceId', "${id}")
                , "GET");
                ds.getDemoData =  function(sourceId){
-                  return new Promise( function(fulfill, reject) { 
-                      try
-                      {
-                          ds.dataProviderClient.methods["getDemoData"](
-                              { "path":{"id":sourceId}}, 
-                              function (data, response) { fulfill (data);}
-                            );
-                      }
-                      catch(ex)
-                      {
-                          reject(ex);
-                      }
-                 });
+                    return returnPromise(ds.dataProviderClient,"getDemoData", { "path":{"id":sourceId}});
                }
 
             }
@@ -127,7 +117,6 @@ var init = function(appModule,config, localization){
 
             appModule.dataProviderStores[dsConfig.id]=ds;
         });
-       
     }
 
     appModule.createDataParametersForExample =   function createDataParametersForExample(obj, renderingEngine, optionTypes){

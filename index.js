@@ -127,7 +127,9 @@ router.get('/render-report/:templateId', function (req, res) {
     if (options && options.dataSourceId)
     {
         var data = jsReportApp.dataProviderStores[options.dataStore||'default'].getData(options.dataSourceId, parameters);
-        jsReportApp.rendering.renderTemplate(res, templateData.templateParts, data);
+        asynchResponse(data,null, function(d){
+            jsReportApp.rendering.renderTemplate(res, templateData.templateParts, d);
+        });
     }
 });
 
@@ -195,14 +197,14 @@ router.post('/setTemplate/:id', function(req,res){
     var result = jsReportApp.setTemplate(req.params.id,req.body );
     res.contentType('application/json');
     
-    asynchResponse(data,null, (t)=>res.send(t) );
+    asynchResponse(result,null, (t)=>res.send(t) );
 }
 );
 
 router.post('/new', function (req, res) {
     var result = jsReportApp.setTemplate(null,req.body );
     res.contentType('application/json');
-    asynchResponse(data,null, (t)=>res.send(t) );
+    asynchResponse(result,null, (t)=>res.send(t) );
 });
 
 
