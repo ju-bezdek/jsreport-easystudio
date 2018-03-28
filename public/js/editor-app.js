@@ -74,8 +74,8 @@
        success: function (response) {
          //data.id = response.id;
          if(response.id!==undefined &&response.id!==null){
-           history.pushState(null, "List", "/list");
-           window.location.replace(window.location.toString().replace('create/new', "./edit/"+response.id));
+           history.pushState(null, "List", "../list");
+           window.location.replace(window.location.toString().replace('/list', "/edit/"+response.id));
          }
        }
      });
