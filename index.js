@@ -97,7 +97,7 @@ app.get('/', function (req, res) {
 app.get('/render-report/:templateId', function (req, res) {
     var templateId=req.params.templateId;
     var parameters = req.query;
-    var templateData = jsReportApp.getTemplate(templateId).templateParts;
+    var templateData = jsReportApp.getTemplate(templateId);
     if (typeof templateData === "string") {
         templateData = JSON.parse(templateData);
     }

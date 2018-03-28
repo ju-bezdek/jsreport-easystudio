@@ -3,7 +3,9 @@
   "version": "0.2.0",
   "description": "Easy simple studio for editing and testing reports builds on jsreport.net core package - a cool javascript based reporting engine",
   "main": "run-app.js",
-  "engines":{"node": "8.9.0"},
+  "engines": {
+    "node": "8.9.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
@@ -12,7 +14,7 @@
     "handlebars": "^4.0.11",
     "jsreport-core": "^1.5.1",
     "jsreport-handlebars": "^1.1.2",
-    "jsreport-html-to-text": "^1.1.1",
+    "jsreport-html-to-text": "git+https://github.com/ju-bezdek/jsreport-html-to-text.git",
     "jsreport-html-to-xlsx": "^1.4.6",
     "jsreport-jsrender": "^1.0.2",
     "jsreport-phantom-pdf": "^1.4.6",
