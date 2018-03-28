@@ -57,7 +57,13 @@ exports.config = {
         ]
          */
         getTemplate:function(id){
-            return (global.memoryData||{})[id] || global.demoTemplate;
+            var res = (global.memoryData||{})[id] ;
+            if (!res ){
+                var resObj = JSON.parse( global.demoTemplate);
+                resObj["id"]=id;
+                res =JSON.stringify(resObj);
+            }
+            return res;;
         },
         getNewTemplate:function(){
             return global.demoTemplate;
