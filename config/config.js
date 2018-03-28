@@ -35,18 +35,18 @@ exports.config = {
         /**
          * returns array like [{"id":1, "name":"First template"}]
          */
-        getAllTemplates:function(){
-            var res =[];
-            if (global.memoryData){
-                var keys  = Object.getOwnPropertyNames(global.memoryData);
+        // getAllTemplates:function(){
+        //     var res =[];
+        //     if (global.memoryData){
+        //         var keys  = Object.getOwnPropertyNames(global.memoryData);
 
-                for (let index = 0; index < keys.length; index++) {
-                    let key = keys[index];
-                    res.push(global.memoryData[key]);
-                }
-            }
-            return res;
-        },
+        //         for (let index = 0; index < keys.length; index++) {
+        //             let key = keys[index];
+        //             res.push(global.memoryData[key]);
+        //         }
+        //     }
+        //     return res;
+        // },
          /**
          * Function returns array of objects like [
             {"key": "body", "value":"<h1>hello body</h1>", "caption":"optional caption... for stadard keys use rather localization"},

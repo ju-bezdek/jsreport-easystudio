@@ -105,7 +105,7 @@ app.get('/render-report/:templateId', function (req, res) {
     if (options && options.dataSourceId)
     {
         var data = jsReportApp.dataProviderStores[options.dataStore||'default'].getData(options.dataSourceId, parameters);
-        jsReportApp.rendering.renderTemplate(res, templateData, data);
+        jsReportApp.rendering.renderTemplate(res, templateData.templateParts, data);
     }
 });
 
@@ -184,10 +184,12 @@ app.post('/new', function (req, res) {
 app.get('/edit/:id', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
+    var showList = !!jsReportApp.getAllTemplates;
     res.render('editTemplate', {
                                  layout: 'main', 
                                  requestUrl: '/edit', 
-                                 easyAppState: JSON.stringify({templateId:req.params.id, language: jsReportApp.language, localization: jsReportApp.localization}) 
+                                 easyAppState: JSON.stringify({templateId:req.params.id, language: jsReportApp.language, localization: jsReportApp.localization}),
+                                 showList:showList
                                 }               
     )
 });
@@ -195,10 +197,12 @@ app.get('/edit/:id', function (req, res) {
 app.get('/new', function (req, res) {
     console.log('req:edit');
     res.contentType('html');
+    var showList = !!jsReportApp.getAllTemplates;
     res.render('editTemplate', {
         layout: 'main', 
         requestUrl: '/edit', 
-        easyAppState: JSON.stringify({templateId:req.params.id, language: jsReportApp.language, localization: jsReportApp.localization}) 
+        easyAppState: JSON.stringify({templateId:req.params.id, language: jsReportApp.language, localization: jsReportApp.localization}) ,
+        showList:showList
        }               
     )
 });

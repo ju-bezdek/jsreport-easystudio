@@ -95,25 +95,30 @@
                 engine:'handlebars'
             }
         }
-        var customOptions = templates.templateParts.find(x => x.key === 'options').value;
+        var customOptions = templates.find(x => x.key === 'options').value;
         if(customOptions){
             if (typeof customOptions ==="string"){
                  customOptions = JSON.parse(customOptions);
             }
         }
-        var transformedOptions = optionsTransformations.transform(customOptions,templates.templateParts);
+        var transformedOptions = optionsTransformations.transform(customOptions,templates);
         var contentType = optionsTransformations.outputsConfigs[customOptions.output].contentType
         res.contentType(contentType);
         options = Object.assign(options, transformedOptions);
         
         var templateData = {
-            content: templates.templateParts.find(x => x.key === 'body').value,
+            content: templates.find(x => x.key === 'body').value,
             engine: options.engine,
             recipe: options.recipe,
             helpers: renderingHelpers.getEngineHelpersString(options.engine)
             
         };
-        templateData = Object.assign( options,templateData); //secod parameter has priority
+
+        if (options.recipe=="html-to-xlsx") //drity hack
+        {
+            templateData.content= templateData.content.split("&nbsp;").join(" ");
+        }
+        templateData = Object.assign( options,templateData); //second parameter has priority
         return jsreport.render({
                 template: templateData,
                 data: data,
